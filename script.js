@@ -9,9 +9,10 @@ const formatDate = (dateString) => {
 
 const formattedDate = formatDate(date);
 
-const campaignUrl = `http://192.168.98.1:8091/v1/campaign/monitoring/action-count?date_start=${date}&date_finish=${date}&platforms[]=twitter&platforms[]=instagram&platforms[]=youtube&platforms[]=tiktok&platforms[]=facebook&statuses[]=OK&statuses[]=In%20Progress&statuses[]=In%20Queue&statuses[]=Error&statuses[]=Canceled`;
-const boosterUrl = `http://192.168.98.1:8091/v1/post/booster/monitoring/action-count?date_start=${date}&date_finish=${date}&platforms[]=twitter&platforms[]=instagram&platforms[]=youtube&platforms[]=tiktok&platforms[]=facebook&statuses[]=OK&statuses[]=In%20Progress&statuses[]=In%20Queue&statuses[]=Error&statuses[]=Canceled`;
-const massReportUrl = `http://192.168.98.1:8091/v1/mass-report/monitoring/action-count?date_start=${date}&date_finish=${date}&platforms[]=twitter&statuses[]=OK&statuses[]=In%20Progress&statuses[]=In%20Queue&statuses[]=Error&statuses[]=Canceled`;
+// Use the Vercel serverless function as a proxy
+const campaignUrl = `/api/proxy/v1/campaign/monitoring/action-count?date_start=${date}&date_finish=${date}&platforms[]=twitter&platforms[]=instagram&platforms[]=youtube&platforms[]=tiktok&platforms[]=facebook&statuses[]=OK&statuses[]=In%20Progress&statuses[]=In%20Queue&statuses[]=Error&statuses[]=Canceled`;
+const boosterUrl = `/api/proxy/v1/post/booster/monitoring/action-count?date_start=${date}&date_finish=${date}&platforms[]=twitter&platforms[]=instagram&platforms[]=youtube&platforms[]=tiktok&platforms[]=facebook&statuses[]=OK&statuses[]=In%20Progress&statuses[]=In%20Queue&statuses[]=Error&statuses[]=Canceled`;
+const massReportUrl = `/api/proxy/v1/mass-report/monitoring/action-count?date_start=${date}&date_finish=${date}&platforms[]=twitter&statuses[]=OK&statuses[]=In%20Progress&statuses[]=In%20Queue&statuses[]=Error&statuses[]=Canceled`;
 
 // Function to fetch and process the data
 const fetchData = async (url) => {
@@ -91,6 +92,7 @@ document.getElementById("fetchButton").addEventListener("click", () => {
       document.getElementById("reportOutput").textContent = fullReport;
     })
     .catch((error) => {
-      document.getElementById("reportOutput").textContent = "There was a problem with the fetch operation: " + error.message;
+      document.getElementById("reportOutput").textContent =
+        "There was a problem with the fetch operation: " + error.message;
     });
 });
